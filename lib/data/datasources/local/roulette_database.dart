@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -21,9 +22,11 @@ class RouletteDatabase {
   }
 
   Future<Database> _openDatabase() async {
-    final path = join(await getDatabasesPath(), 'roulette_app.db');
+    final dbPath = kIsWeb
+        ? 'roulette_app.db'
+        : join(await getDatabasesPath(), 'roulette_app.db');
     final db = await openDatabase(
-      path,
+      dbPath,
       version: 1,
       onConfigure: (db) async {
         await db.execute('PRAGMA foreign_keys = ON');
