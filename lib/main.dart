@@ -1,37 +1,10 @@
-﻿import "package:flutter/material.dart";
+import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const RouletteApp());
-}
+import 'app/roulette_app.dart';
+import 'data/repositories/roulette_repository.dart';
 
-class RouletteApp extends StatelessWidget {
-  const RouletteApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "Roulette",
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
-        useMaterial3: true,
-      ),
-      home: const RouletteHomePage(),
-    );
-  }
-}
-
-class RouletteHomePage extends StatelessWidget {
-  const RouletteHomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text(
-          "Hello Roulette!",
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-        ),
-      ),
-    );
-  }
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final repository = await RouletteRepository.create();
+  runApp(RouletteApp(repository: repository));
 }
